@@ -1,0 +1,103 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+
+@keyframes wiggle {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(-1.5deg); }
+  30% { transform: rotate(1.5deg); }
+  45% { transform: rotate(-2deg); }
+  60% { transform: rotate(2deg); }
+  75% { transform: rotate(-0.75deg); }
+  85% { transform: rotate(0.75deg); }
+  95% { transform: rotate(-0.1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.wiggle-in {
+  animation: wiggle 0.6s ease;
+}
+
+.swimlane {
+  min-height: 75vh;
+  min-width: 1280px;
+}
+
+.toggle-to-on,
+.toggle-to-off {
+  transition: opacity 0.25s ease-in;
+}
+
+.toggle-to-off {
+  position: absolute;
+  opacity: 0;
+}
+
+.toggle-on .toggle-to-on {
+  opacity: 0;
+}
+
+.toggle-on .toggle-to-off {
+  opacity: 1;
+}
+
+.column-body {
+  position: relative;
+  flex-basis: 100%;
+}
+
+[draggable] {
+  cursor: grab;
+}
+
+[draggable]:active {
+  cursor: grabbing;
+}
+
+.card {
+  transition: transform 0.25s, opacity 0.5s ease-in;
+}
+
+.column-body::before {
+  background: var(--color-base-content);
+  border-radius: 0.5rem;
+  opacity: 0.75;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.column .card:nth-child(5n+1),
+.column + .column .card:nth-child(5n+2),
+.column + .column + .column .card:nth-child(5n+3) {
+  transform: rotate(0deg);
+}
+
+.column .card:nth-child(5n+2),
+.column + .column .card:nth-child(5n+3),
+.column + .column + .column .card:nth-child(5n+4) {
+  transform: rotate(-0.5deg);
+}
+
+.column .card:nth-child(5n+3),
+.column + .column .card:nth-child(5n+4),
+.column + .column + .column .card:nth-child(5n+5) {
+  transform: rotate(0.25deg);
+}
+
+.column .card:nth-child(5n+4),
+.column + .column .card:nth-child(5n),
+.column + .column + .column .card:nth-child(5n+1) {
+  transform: rotate(-0.25deg);
+}
+
+.column .card:nth-child(5n),
+.column + .column .card:nth-child(5n+1),
+.column + .column + .column .card:nth-child(5n+2) {
+  transform: rotate(0.5deg);
+}

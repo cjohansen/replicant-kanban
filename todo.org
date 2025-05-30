@@ -1,0 +1,22 @@
+* App [5/9]
+** DONE Scene: Knapp for å legge til task
+** DONE Scene: Skjema for å skrive inn task
+** DONE Rendering-logikk for skjema
+** DONE Fade inn ny task
+** TODO Lag en server, ala todo-serveren
+** TODO Implementer å hente tasks fra serveren
+** TODO Implementer streaming data
+** DONE Få opp dev wiring
+** TODO Forskjellige implementasjoner av set-task-status for server/lokalt
+* Ting som blir vist
+** Render hiccup
+** Events som data
+** Interpolering i event data
+** Deklarative transisjoner
+** Life-cycle hooks (drag'n'drop)
+** Testing
+** Aliaser
+** Render-loop
+** Frikobling: data på klient eller fra server
+** Frikobling: strømme data til klienten
+** Forms

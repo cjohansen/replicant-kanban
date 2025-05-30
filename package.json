@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.5",
+    "daisyui": "^5.0.35",
+    "shadow-cljs": "^3.0.5",
+    "snabbdom": "3.5.1",
+    "tailwindcss": "^4.1.5"
+  }
+}

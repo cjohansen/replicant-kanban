@@ -1,0 +1,12 @@
+{:deps {:aliases [:dev]}
+ :dev-http {7070 ["resources/public" "classpath:public"]}
+ :builds
+ {:app
+  {:target :browser
+   :modules {:main {:init-fn kanban.dev/main}}
+   :dev {:output-dir "resources/public/app-js"}}
+
+  :portfolio
+  {:target :browser
+   :modules {:main {:init-fn kanban.scenes/main}}
+   :dev {:output-dir "resources/public/portfolio-js"}}}}
