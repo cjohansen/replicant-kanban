@@ -5,6 +5,8 @@ This is a demo application that partially implements a Kanban board with
 2025 [re:Clojure](https://www.reclojure.org) talk about simpler frontend
 development with Replicant.
 
+[Watch "UI, Pure and Simple" on YouTube](https://www.youtube.com/watch?v=AGTDfXKGvNI&ab_channel=LondonClojurians).
+
 ## Run it
 
 ```sh
