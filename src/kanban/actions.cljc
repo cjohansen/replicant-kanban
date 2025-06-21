@@ -154,8 +154,9 @@
         ctx {:store store
              :event (:replicant/dom-event event-opts)
              :handle-actions (partial handle-actions store event-opts placeholders)}]
-    (doseq [action (->> (expand-actions state actions action-data)
-                        (mapcat :expanded)
-                        (expand-placeholders event-opts placeholders))]
+    (doseq [action (->> action-data
+                        (expand-placeholders event-opts placeholders)
+                        (expand-actions state actions )
+                        (mapcat :expanded))]
       (let [f (get-in actions [(first action) :execute])]
         (f ctx action)))))
