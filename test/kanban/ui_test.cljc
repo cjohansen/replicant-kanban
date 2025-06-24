@@ -6,7 +6,7 @@
 
 (deftest render-card-test
   (testing "Renders card title"
-    (is (= (->> {:task/id #uuid "d8a1fa84-5e33-4ea9-a68b-3fbd6f365731"
+    (is (= (->> {:task/id "d8a1"
                  :task/status :status/open
                  :task/title "Add keyboard shortcuts for board navigation"
                  :task/priority :priority/medium
@@ -311,7 +311,7 @@
                 :on :submit)
            [[:actions/prevent-default]
             [:actions/dissoc-in [:transient :status/open :add?]]
-            [:actions/add-task [:event/form-data] [:random/uuid]]])))
+            [:actions/add-task [:event/form-data] [:random/id]]])))
 
   (testing "Includes a cancel button on the new task form"
     (is (= (->> (ui/render-columns

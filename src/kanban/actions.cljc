@@ -2,6 +2,7 @@
   (:require [kanban.command :as command]
             #?(:cljs [kanban.forms :as forms])
             [kanban.http :as http]
+            [kanban.id :as id]
             [kanban.query :as query]
             [kanban.task :as task]
             [nexus.registry :as nxr]))
@@ -85,7 +86,7 @@
      (fn [{:replicant/keys [^js dom-event]}]
        (some-> dom-event .-target forms/gather-form-data))))
 
-(nxr/register-placeholder! :random/uuid (fn [_] (random-uuid)))
+(nxr/register-placeholder! :random/id (fn [_] (id/random-id)))
 
 (nxr/register-system->state!
  (fn [store]

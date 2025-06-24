@@ -32,9 +32,9 @@
              :task/title "Support more stuff"
              :task/priority :priority/medium
              :tags "feature ui"}
-            #uuid "254dcfb3-031f-4256-bcd3-db7a1313a7bb")
-           [[:actions/assoc-in [:tasks #uuid "254dcfb3-031f-4256-bcd3-db7a1313a7bb"]
-             {:task/id #uuid "254dcfb3-031f-4256-bcd3-db7a1313a7bb"
+            "254d")
+           [[:actions/assoc-in [:tasks "254d"]
+             {:task/id "254d"
               :task/status :status/open
               :task/title "Support more stuff"
               :task/priority :priority/medium
@@ -50,7 +50,7 @@
                 :task/title "Support more stuff"
                 :task/priority :priority/medium
                 :tags ""}
-               #uuid "3b287a55-b930-4c30-a58a-d48c50a3ff36")
+               "3b28")
               first last :task/tags))))
 
   (testing "Adds task with a command when data is from the server"
@@ -60,11 +60,11 @@
              :task/title "Support more stuff"
              :task/priority :priority/medium
              :tags "feature ui"}
-            #uuid "3b287a55-b930-4c30-a58a-d48c50a3ff36")
+            "3b28")
            [[:actions/command
              {:command/kind :commands/create-task
               :command/data
-              {:task/id #uuid "3b287a55-b930-4c30-a58a-d48c50a3ff36"
+              {:task/id "3b28"
                :task/status :status/open
                :task/title "Support more stuff"
                :task/priority :priority/medium

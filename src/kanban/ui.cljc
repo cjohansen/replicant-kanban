@@ -58,7 +58,7 @@
   [:form.bg-base-100.p-4.rounded-md.flex.flex-col.gap-2.z-1.mt-auto
    {:on {:submit [[:actions/prevent-default]
                   [:actions/dissoc-in [:transient status :add?]]
-                  [:actions/add-task [:event/form-data] [:random/uuid]]]}}
+                  [:actions/add-task [:event/form-data] [:random/id]]]}}
    [:input {:type "hidden"
             :name "task/status"
             :data-type "keyword"
