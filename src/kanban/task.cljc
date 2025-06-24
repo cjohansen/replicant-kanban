@@ -6,7 +6,7 @@
 
 (defn get-tasks [state]
   (if (:tasks state)
-    {:tasks (:tasks state)}
+    {:tasks (vals (:tasks state))}
     (if-let [results (query/get-result state task-query)]
       {:tasks results}
       {:loading? (query/loading? state task-query)
@@ -22,38 +22,37 @@
 
 (defn set-task-status [state id status]
   (if (:tasks state)
-    (let [idx (->> (:tasks state)
-                   (map-indexed vector)
-                   (filter (comp #{id} :task/id second))
-                   ffirst)]
-      [[:actions/assoc-in
-        [:tasks idx :task/status] status
-        [:tasks idx :task/changed-status-at] (:now state)]])
+    [[:actions/assoc-in [:tasks id :task/status] status]
+     [:actions/assoc-in [:tasks id :task/changed-status-at] (:now state)]]
     [[:actions/command
       {:command/kind :commands/set-task-status
-       :command/data {:task/id id, :task/status status}}]]))
+       :command/data {:task/id id
+                      :task/status status}}]]))
 
-(defn add-task [state form-data]
+(defn add-task [state form-data id]
   (let [tags (->> (str/split (:tags form-data) #" ")
                   (mapv str/trim)
                   (filter not-empty)
                   (mapv #(keyword "tags" %)))
         task (cond-> (-> (dissoc form-data :tags)
-                         (assoc :task/id (random-uuid))
+                         (assoc :task/id id)
                          (assoc :task/created-at (:now state)))
                (not-empty tags) (assoc :task/tags (set tags)))]
     (if (:tasks state)
-      [[:actions/conj-in [:tasks] task]]
+      [[:actions/assoc-in [:tasks id] task]]
       [[:actions/command
         {:command/kind :commands/create-task
          :command/data task}
         {:on-success [[:actions/query {:query/kind :queries/tasks}]]}]])))
 
-(def actions
-  {:actions/add-task
-   {:expand (fn [state [_ & args]]
-              (apply add-task state args))}
+(defn expanded-path [{:task/keys [id]}]
+  [:transient id :expanded?])
 
-   :actions/set-task-status
-   {:expand (fn [state [_ & args]]
-              (apply set-task-status state args))}})
+(defn expanded? [state task]
+  (boolean (get-in state (expanded-path task))))
+
+(defn expand-task [state id]
+  [[:actions/assoc-in (expanded-path (get-in state [:tasks id])) true]])
+
+(defn collapse-task [state id]
+  [[:actions/assoc-in (expanded-path (get-in state [:tasks id])) false]])

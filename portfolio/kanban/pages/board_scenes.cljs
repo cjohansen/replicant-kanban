@@ -1,12 +1,11 @@
 (ns kanban.pages.board-scenes
-  (:require [kanban.actions :as actions]
-            [kanban.core :as kanban]
-            [kanban.query :as query]
+  (:require [kanban.query :as query]
             [kanban.sample-data :as sample-data]
             [kanban.task :as task]
             [kanban.ui :as ui]
             [kanban.ui.elements :as e]
             [lookup.core :as lookup]
+            [nexus.registry :as nxr]
             [portfolio.replicant :refer-macros [defscene]]))
 
 (defn render-app [state]
@@ -19,16 +18,16 @@
   {:state state
    :hiccup (render-app state)})
 
-(defn handle-actions [state actions]
+(defn dispatch-actions [state actions]
   (let [store (atom state)]
-    (actions/handle-actions store nil kanban/placeholders actions)
+    (nxr/dispatch store {} actions)
     @store))
 
 (defn trigger-event [app selector event]
   (let [state (->> (:hiccup app)
                    (lookup/select-one selector)
                    lookup/attrs :on event
-                   (handle-actions (:state app)))]
+                   (dispatch-actions (:state app)))]
     {:state state
      :hiccup (render-app state)}))
 

@@ -1,7 +1,7 @@
 (ns kanban.http
   (:require [cljs.reader :as reader]))
 
-(defn make-http-request [store path send receive handle-actions payload & [{:keys [on-success]}]]
+(defn make-http-request [store path send receive dispatch payload & [{:keys [on-success]}]]
   (swap! store send (js/Date.) payload)
   (-> (js/fetch path #js {:method "POST"
                           :body (pr-str payload)})
@@ -10,7 +10,7 @@
       (.then (fn [res]
                (swap! store receive (js/Date.) payload res)
                (when on-success
-                 (handle-actions on-success))))
+                 (dispatch on-success))))
       (.catch #(swap! store receive (js/Date.) payload {:error (.-message %)}))))
 
 (defn connect-event-source [store path param send receive payload]

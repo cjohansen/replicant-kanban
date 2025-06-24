@@ -1,9 +1,10 @@
 {:paths ["src" "resources"]
  :deps {org.clojure/clojure {:mvn/version "1.12.0"}
         thheller/shadow-cljs {:mvn/version "3.0.5"}
-        no.cjohansen/portfolio {:mvn/version "2025.01.28"}
-        no.cjohansen/dataspex {:mvn/version "2025.05.7"}
+        no.cjohansen/dataspex {:mvn/version "2025.06.8"}
+        no.cjohansen/nexus {:mvn/version "2025.07.1"}
         no.cjohansen/phosphor-clj {:mvn/version "2025.04.16"}
+        no.cjohansen/portfolio {:mvn/version "2025.01.28"}
         no.cjohansen/replicant {:mvn/version "2025.03.27"}
         ring/ring {:mvn/version "1.13.0"}}
  :aliases

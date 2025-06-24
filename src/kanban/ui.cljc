@@ -1,14 +1,10 @@
 (ns kanban.ui
-  (:require [kanban.ui.elements :as e]
-            [phosphor.icons :as icons]
-            [kanban.task :as task]))
-
-(defn expanded-path [{:task/keys [id]}]
-  [:transient id :expanded?])
+  (:require [kanban.task :as task]
+            [kanban.ui.elements :as e]
+            [phosphor.icons :as icons]))
 
 (defn ^{:indent 1} render-task [state {:task/keys [id title tags priority description] :as task}]
-  (let [expanded-path (expanded-path task)
-        expanded? (boolean (get-in state expanded-path))]
+  (let [expanded? (task/expanded? state task)]
     [e/card (cond-> {:on {:dragstart [[:actions/assoc-in [:transient :dragging] id]]}}
               expanded? (assoc ::e/expanded? true)
               (contains? (:new-tasks state) id) (update :class conj :wiggle-in))
@@ -22,7 +18,7 @@
        [e/card-action
         [::e/toggle-button.btn-small
          {::e/on? expanded?
-          :on {:click [[:actions/assoc-in expanded-path (not expanded?)]]}}
+          :on {:click [[(if expanded? :actions/collapse-task :actions/expand-task) id]]}}
          (icons/icon :phosphor.regular/file)
          (icons/icon :phosphor.regular/x)]])
      [e/card-title
@@ -39,9 +35,7 @@
   (when (and task (not= status (:task/status task)))
     (if (or (nil? limit) (< (count (status->tasks status)) limit))
       [[:actions/set-task-status (:task/id task) status]]
-      [[:actions/assoc-in [:transient status :error] :errors/at-limit]
-       [:actions/delay 3000
-        [[:actions/dissoc-in [:transient status :error]]]]])))
+      [[:actions/flash 3000 [:transient status :error] :errors/at-limit]])))
 
 (defn render-error [{:column/keys [status limit]} error]
   (e/alert {:class :alert-error
@@ -64,7 +58,7 @@
   [:form.bg-base-100.p-4.rounded-md.flex.flex-col.gap-2.z-1.mt-auto
    {:on {:submit [[:actions/prevent-default]
                   [:actions/dissoc-in [:transient status :add?]]
-                  [:actions/add-task :event/form-data]]}}
+                  [:actions/add-task [:event/form-data] [:random/uuid]]]}}
    [:input {:type "hidden"
             :name "task/status"
             :data-type "keyword"

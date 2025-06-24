@@ -51,7 +51,7 @@
             [::e/toggle-button
              {::e/on? false
               :class #{"btn-small"}
-              :on {:click [[:actions/assoc-in [:transient "task1" :expanded?] true]]}}
+              :on {:click [[:actions/expand-task "task1"]]}}
              :phosphor.regular/file
              :phosphor.regular/x]])))
 
@@ -90,7 +90,7 @@
             [::e/toggle-button
              {::e/on? true
               :class #{"btn-small"}
-              :on {:click [[:actions/assoc-in [:transient "task1" :expanded?] false]]}}
+              :on {:click [[:actions/collapse-task "task1"]]}}
              :phosphor.regular/file
              :phosphor.regular/x]])))
 
@@ -193,10 +193,7 @@
                 last
                 lookup/attrs)
            {:on {:drop [[:actions/prevent-default]
-                        [:actions/assoc-in [:transient :status/in-progress :error] :errors/at-limit]
-                        [:actions/delay
-                         3000
-                         [[:actions/dissoc-in [:transient :status/in-progress :error]]]]]}})))
+                        [:actions/flash 3000 [:transient :status/in-progress :error] :errors/at-limit]]}})))
 
   (testing "Renders limit error on column"
     (is (= (->> (ui/render-columns
@@ -314,7 +311,7 @@
                 :on :submit)
            [[:actions/prevent-default]
             [:actions/dissoc-in [:transient :status/open :add?]]
-            [:actions/add-task :event/form-data]])))
+            [:actions/add-task [:event/form-data] [:random/uuid]]])))
 
   (testing "Includes a cancel button on the new task form"
     (is (= (->> (ui/render-columns

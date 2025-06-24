@@ -1,6 +1,5 @@
 (ns kanban.ui.elements
-  (:require [kanban.actions :as actions]
-            [phosphor.icons :as icons]
+  (:require [phosphor.icons :as icons]
             [replicant.alias :refer [defalias]]))
 
 (def badge-styles
@@ -28,22 +27,13 @@
 (defalias card-action [attrs body]
   (into [:div.absolute.top-0.right-0.m-4 attrs] body))
 
-(defn augment-event [action]
-  (fn [handler]
-    (if (or (nil? handler) (fn? handler))
-      (fn [e]
-        (actions/handle-actions nil {:replicant/dom-event e} nil [action])
-        (when (fn? handler)
-          (handler e)))
-      (concat handler [action]))))
-
 (defalias card [attrs body]
   [:article.card.shadow-sm.bg-base-100.relative
    (cond-> (assoc attrs :draggable true)
      (::expanded? attrs) (assoc-in [:style :transform] "scale(1.2")
      (::expanded? attrs) (update :class concat [:border :z-5])
-     :then (update-in [:on :dragstart] (augment-event [:actions/start-drag-move]))
-     :then (update-in [:on :dragend] (augment-event [:actions/end-drag-move])))
+     :then (update-in [:on :dragstart] conj [:actions/start-drag-move])
+     :then (update-in [:on :dragend] conj [:actions/end-drag-move]))
    (into [:div.card-body.flex.flex-col.gap-4] body)])
 
 (defalias column [attrs body]
