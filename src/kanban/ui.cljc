@@ -57,7 +57,7 @@
 (defn render-task-form [status]
   [:form.bg-base-100.p-4.rounded-md.flex.flex-col.gap-2.z-1.mt-auto
    {:on {:submit [[:actions/prevent-default]
-                  [:actions/dissoc-in [:transient status :add?]]
+                  [:actions/close-new-task-form status]
                   [:actions/add-task [:event/form-data] [:random/id]]]}}
    [:input {:type "hidden"
             :name "task/status"
@@ -85,8 +85,9 @@
     [::e/button.btn-primary {:type "submit"}
      [e/icon {::e/size :w-4} (icons/icon :phosphor.regular/plus-circle)]
      "Add task"]
-    [::e/button.btn-ghost {:type "button"
-                           :on {:click [[:actions/dissoc-in [:transient status :add?]]]}}
+    [::e/button.btn-ghost
+     {:type "button"
+      :on {:click [[:actions/close-new-task-form status]]}}
      [e/icon {::e/size :w-4} (icons/icon :phosphor.regular/x-circle)]
      "Cancel"]]])
 
@@ -124,9 +125,7 @@
 
                    (and (:column/add-new? column) (not adding?))
                    (conj [::e/button.z-1.mt-auto
-                          {:on
-                           {:click
-                            [[:actions/assoc-in [:transient (:column/status column) :add?] true]]}}
+                          {:on {:click [[:actions/open-new-task-form (:column/status column)]]}}
                           [e/icon {::e/size :w-4} (icons/icon :phosphor.regular/plus)]
                           "Add task"])
 

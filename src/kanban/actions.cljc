@@ -75,6 +75,14 @@
 (nxr/register-action! :actions/expand-task task/expand-task)
 (nxr/register-action! :actions/collapse-task task/collapse-task)
 
+(nxr/register-action! :actions/open-new-task-form
+  (fn [_ status]
+    [[:actions/assoc-in [:transient status :add?] true]]))
+
+(nxr/register-action! :actions/close-new-task-form
+  (fn [_ status]
+    [[:actions/dissoc-in [:transient status :add?]]]))
+
 (nxr/register-action! :actions/flash
   (fn [_ ms path v]
     [[:actions/assoc-in path v]
