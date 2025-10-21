@@ -1,9 +1,12 @@
 (ns kanban.dev
   (:require [dataspex.core :as dataspex]
-            [kanban.actions :as actions]
+            [kanban.actions]
             [kanban.core :as kanban]
             [kanban.sample-data :as sample-data]
-            [nexus.action-log :as action-log]))
+            [nexus.action-log :as action-log]
+            [nexus.registry :as nxr]))
+
+:kanban.actions/keep
 
 (defonce store
   (atom
@@ -25,10 +28,10 @@
        (swap! store assoc :tasks))
 
   ;; Fetch data from the server
-  ;; (actions/handle-actions store nil [[:actions/query {:query/kind :queries/tasks}]])
+  ;; (nxr/dispatch store {} [[:actions/query {:query/kind :queries/tasks}]])
 
   ;; Stream data from the server
-  ;; (actions/handle-actions store nil [[:actions/subscribe-query {:query/kind :queries/tasks}]])
+  ;; (nxr/dispatch store {} [[:actions/subscribe-query {:query/kind :queries/tasks}]])
 
   (swap! store assoc :system/started-at (js/Date.)))
 
