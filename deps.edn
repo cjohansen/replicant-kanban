@@ -1,7 +1,7 @@
 {:paths ["src" "resources"]
  :deps {org.clojure/clojure {:mvn/version "1.12.0"}
         thheller/shadow-cljs {:mvn/version "3.0.5"}
-        no.cjohansen/dataspex {:mvn/version "2025.06.8"}
+        no.cjohansen/dataspex {:mvn/version "2025.08.1"}
         no.cjohansen/nexus {:mvn/version "2025.07.1"}
         no.cjohansen/phosphor-clj {:mvn/version "2025.04.16"}
         no.cjohansen/portfolio {:mvn/version "2025.01.28"}
@@ -14,4 +14,5 @@
    {kaocha-noyoda/kaocha-noyoda {:mvn/version "2019-06-03"}
     lambdaisland/kaocha {:mvn/version "1.91.1392"}
     com.lambdaisland/kaocha-cljs {:mvn/version "1.5.154"}
-    no.cjohansen/lookup {:mvn/version "2025.04.12"}}}}}
+    no.cjohansen/lookup {:mvn/version "2025.04.12"}
+    io.github.tonsky/clj-reload {:mvn/version "1.0.0"}}}}}
