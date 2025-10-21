@@ -296,7 +296,7 @@
                 (lookup/select-one [::e/column-body ::e/button])
                 (strip-attrs #{:class}))
            [::e/button
-            {:on {:click [[:actions/assoc-in [:transient :status/open :add?] true]]}}
+            {:on {:click [[:actions/open-new-task-form :status/open]]}}
             [::e/icon {::e/size :w-4} :phosphor.regular/plus]
             "Add task"])))
 
@@ -310,7 +310,7 @@
                 lookup/attrs
                 :on :submit)
            [[:actions/prevent-default]
-            [:actions/dissoc-in [:transient :status/open :add?]]
+            [:actions/close-new-task-form :status/open]
             [:actions/add-task [:event/form-data] [:random/id]]])))
 
   (testing "Includes a cancel button on the new task form"
@@ -323,7 +323,7 @@
                 last
                 lookup/attrs
                 :on :click)
-           [[:actions/dissoc-in [:transient :status/open :add?]]])))
+           [[:actions/close-new-task-form :status/open]])))
 
   (testing "Renders loading spinner when tasks aren't available"
     (is (= (->> (ui/render-columns
