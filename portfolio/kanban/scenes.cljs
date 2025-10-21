@@ -1,5 +1,6 @@
 (ns kanban.scenes
-  (:require [kanban.pages.board-scenes]
+  (:require [kanban.actions]
+            [kanban.pages.board-scenes]
             [kanban.ui.card-scenes]
             [kanban.ui.column-scenes]
             [kanban.ui.elements-scenes]
@@ -7,6 +8,7 @@
             [portfolio.ui :as portfolio]
             [replicant.dom :as r]))
 
+:kanban.actions/keep
 :kanban.pages.board-scenes/keep
 :kanban.ui.card-scenes/keep
 :kanban.ui.column-scenes/keep
